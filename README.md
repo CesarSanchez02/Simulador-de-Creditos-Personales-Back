@@ -20,14 +20,63 @@ Backend REST para registrar clientes, simular creditos con amortizacion francesa
 
 La configuracion de conexion se encuentra en `src/main/resources/application.yml`.
 
-## Ejecutar el proyecto
+## Preparar, compilar y ejecutar
 
-En Windows PowerShell:
+Sigue estos pasos desde la raiz del proyecto en Windows PowerShell.
+
+### 1. Verificar requisitos
+
+Confirma que esten instalados y ejecutandose:
+
+- JDK 21.
+- PostgreSQL.
+- Maven 
+
+### 2. Crear la base de datos
+
+La base de datos utilizada por el proyecto es `simulador_creditos_db` y se ejecuta localmente en `localhost:5432`.
+
+Si aun no existe, creala desde `psql` o PgAdmin:
+
+```sql
+CREATE DATABASE simulador_creditos_db;
+```
+
+### 3. Ejecutar el script SQL o importa
+
+El script se encuentra dentro del proyecto en:
+
+```text
+src/main/resources/bd/simulador_creditos_db.sql
+```
+
+### 4. Revisar la conexion
+
+Verifica que `src/main/resources/application.yml` tenga el mismo nombre de base, usuario, contrasena y puerto de PostgreSQL:
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/simulador_creditos_db
+    username: TU_USERNAME
+    password: TU_PASSWORD
+```
+
+### 5. Compilar el proyecto
+
+```powershell
+./mvnw.cmd clean compile
+```
+
+Este comando valida y compila el codigo Java. La base de datos no necesita estar disponible para esta etapa.
+
+### 6. Ejecutar la aplicacion
 
 ```powershell
 ./mvnw.cmd spring-boot:run
 ```
 
+En este paso Spring Boot se conecta a PostgreSQL y Hibernate crea o actualiza las tablas configuradas.
 
 La API queda disponible en:
 
